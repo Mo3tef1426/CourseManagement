@@ -51,7 +51,7 @@ class Student {
     }
 
         // count total students for dashboard cards
-        
+
     public function countStudents(){
 
     $result = $this->db->query(
@@ -60,5 +60,29 @@ class Student {
 
     return $result->fetch(PDO::FETCH_ASSOC);
 
+}
+
+
+public function countCourses($studentId){
+
+    $result = $this->db->prepare( "select count(*) as total from enrollments where student_id = :student_id");
+
+    $result->bindParam(":student_id",$studentId,PDO::PARAM_INT);
+
+    $result->execute();
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
+
+//   student show one
+
+public function getStudentCourses($studentId){ $result = $this->db->prepare(
+     "SELECT e.id AS enrollment_id, c.id AS course_id, c.title, c.price, e.enrolled_at FROM enrollments e 
+      JOIN courses c ON e.course_id = c.id    WHERE e.student_id = :student_id"
+    );
+    $result->bindParam(":student_id", $studentId, PDO::PARAM_INT);
+    $result->execute();
+    return $result->fetchAll(PDO::FETCH_ASSOC);
 }
 }

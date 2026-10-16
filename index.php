@@ -15,6 +15,7 @@ $studentObj = new Student();
 $courseObj = new Course();
 $enrollmentObj = new Enrollment();
 
+$recentEnrollments = $enrollmentObj->getRecentEnrollments();
 $studentsCount = $studentObj->countStudents();
 $coursesCount = $courseObj->countCourses();
 $enrollmentsCount = $enrollmentObj->countEnrollments();
@@ -130,106 +131,30 @@ $enrollmentsCount = $enrollmentObj->countEnrollments();
                                     No enrollments found yet.
                                 </td>
                             </tr> -->
+
+                            <!-- foreach catch data    -->
+                            <?php foreach($recentEnrollments as $row){ ?>
                         <tr>
                             <td>
-                                <div class="fw-semibold text-dark">Ahmed Mahmoud</div>
-                                <small class="text-muted">ahmedmahmoud@gmail.com</small>
+                                <div class="fw-semibold text-dark"> <?php echo $row['student_name']; ?></div>
+                                <small class="text-muted"><?php echo $row['email']; ?></small>
                             </td>
                             <td>
-                                <span class="badge bg-light text-dark border">Laravel</span>
+                                <span class="badge bg-light text-dark border"><?php echo $row['course_title']; ?></span>
                             </td>
                             <td class="text-secondary small">
-                                2026-04-12 12:12:12
+                               <?php echo $row['enrolled_at']; ?>
                             </td>
                             <td class="text-end">
-                                <a href="enrollments/delete.php?id=1"
-                                    class="btn btn-outline-danger btn-sm-action"
+                            <a href= "enrollments/delete.php?id=<?php echo $row['id']; ?>" class="btn btn-outline-danger btn-sm-action"
                                     onclick="return confirm('Are you sure you want to remove this enrollment?');"
                                     title="Remove Enrollment">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="fw-semibold text-dark">Osama Mohamed</div>
-                                <small class="text-muted">osamamohamed@gmail.com</small>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border">PHP</span>
-                            </td>
-                            <td class="text-secondary small">
-                                2026-04-13 12:12:12
-                            </td>
-                            <td class="text-end">
-                                <a href="enrollments/delete.php?id=1"
-                                    class="btn btn-outline-danger btn-sm-action"
-                                    onclick="return confirm('Are you sure you want to remove this enrollment?');"
-                                    title="Remove Enrollment">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="fw-semibold text-dark">John Doe</div>
-                                <small class="text-muted">johndoe@gmail.com</small>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border">Python</span>
-                            </td>
-                            <td class="text-secondary small">
-                                2026-04-12 12:12:12
-                            </td>
-                            <td class="text-end">
-                                <a href="enrollments/delete.php?id=1"
-                                    class="btn btn-outline-danger btn-sm-action"
-                                    onclick="return confirm('Are you sure you want to remove this enrollment?');"
-                                    title="Remove Enrollment">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="fw-semibold text-dark">Peter John</div>
-                                <small class="text-muted">peterjohn@gmail.com</small>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border">Laravel</span>
-                            </td>
-                            <td class="text-secondary small">
-                                2026-04-12 12:12:12
-                            </td>
-                            <td class="text-end">
-                                <a href="enrollments/delete.php?id=1"
-                                    class="btn btn-outline-danger btn-sm-action"
-                                    onclick="return confirm('Are you sure you want to remove this enrollment?');"
-                                    title="Remove Enrollment">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="fw-semibold text-dark">Sara Ali</div>
-                                <small class="text-muted">saraali@gmail.com</small>
-                            </td>
-                            <td>
-                                <span class="badge bg-light text-dark border">Android</span>
-                            </td>
-                            <td class="text-secondary small">
-                                2026-04-12 12:12:12
-                            </td>
-                            <td class="text-end">
-                                <a href="enrollments/delete.php?id=1"
-                                    class="btn btn-outline-danger btn-sm-action"
-                                    onclick="return confirm('Are you sure you want to remove this enrollment?');"
-                                    title="Remove Enrollment">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        <?php } ?>
+                      
                     </tbody>
                 </table>
             </div>

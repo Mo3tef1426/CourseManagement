@@ -45,4 +45,26 @@ class Enrollment {
     return $result->fetch(PDO::FETCH_ASSOC);
 
 }
+            
+        // get last 5 enrollments
+public function getRecentEnrollments(){
+
+    $sql = "select e.id ,
+                   e.enrolled_at ,
+                   s.name as student_name ,
+                   s.email ,
+                   c.title as course_title
+            from enrollments e ,
+                 students s ,
+                 courses c
+            where e.student_id = s.id
+            and e.course_id = c.id
+            order by e.id desc
+            limit 5";
+
+    $result = $this->db->query($sql);
+
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+
+}
 }

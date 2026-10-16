@@ -6,6 +6,8 @@
     $studentObj= new Student();
     $id = $_GET['id'];
     $student = $studentObj->getById($id);
+    $numOfCourses = $studentObj->countCourses($id);
+    $courses = $studentObj->getStudentCourses($id);
 
     // $numOfCourses= $studentObj->c       function for count courses
     require_once __DIR__ . '/../includes/header.php';
@@ -15,6 +17,8 @@
     <div>
         <h2 class="h4 fw-bold text-dark mb-1"><?php echo $student['name'] ?></h2>
         <p class="text-secondary small mb-0"><?php echo $student['email'] ?></p>
+        <p class="text-secondary small mb-0"> Courses :<?php echo $numOfCourses['total']; ?>
+</p>
     </div>
     <div class="d-flex gap-2">
         <a href="index.php" class="btn btn-outline-secondary btn-sm">
@@ -59,7 +63,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between px-0 py-2">
                         <span class="text-muted"><i class="bi bi-journal-check me-2"></i>Active Courses</span>
-                        <span class="badge bg-primary rounded-pill">1</span>
+                        <span class="badge bg-primary rounded-pill"> <?php echo $numOfCourses['total']; ?></span>
                     </li>
                 </ul>
             </div>
@@ -108,7 +112,7 @@
         <div class="card">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <span class="fw-semibold text-dark">
-                    <i class="bi bi-journal-bookmark-fill me-2 text-primary"></i> Enrolled Courses (5)
+                    <i class="bi bi-journal-bookmark-fill me-2 text-primary"></i> Enrolled Courses (<?php echo $numOfCourses['total']; ?>)
                 </span>
             </div>
             <div class="table-responsive">
@@ -127,27 +131,31 @@
                                     This student is not enrolled in any courses yet.
                                 </td>
                             </tr> -->
+
+                            <!-- student show one  -->
+                            <?php foreach($courses as $course){ ?>
+
                         <tr>
                             <td>
                                 <div class="fw-semibold text-dark">
-                                    <a href="courses/show.php?id=1" class="text-dark text-decoration-none">
-                                        PHP
+                                    <a href="courses/show.php?id=<?php echo $course['course_id']; ?>" class="text-dark text-decoration-none">
+                                        <?php echo $course['title']; ?>
                                     </a>
                                 </div>
                                 <small class="text-muted text-truncate d-inline-block" style="max-width: 280px;">
-                                    PHP ($100)
+                                    <!-- PHP ($100) -->  <?php echo $course['price']; ?>
                                 </small>
                             </td>
                             <td>
                                 <span class="badge bg-success-subtle text-success border border-success-subtle">
-                                    $100
+                                    <!-- $100 -->  $<?php echo $course['price']; ?>
                                 </span>
                             </td>
                             <td class="text-secondary small">
-                                2026-04-06 12:12:12
+                               <?php echo $course['enrolled_at']; ?>
                             </td>
                             <td class="text-end">
-                                <a href="enrollments/delete.php?id=1&redirect=student&student_id=5"
+                                <a href="enrollments/delete.php?id=<?php echo $course['enrollment_id']; ?> &redirect=student&student_id=5"
                                     class="btn btn-outline-danger btn-sm-action"
                                     onclick="return confirm('Remove student from &quot;PHP&quot;?');"
                                     title="Drop Course">
@@ -155,6 +163,7 @@
                                 </a>
                             </td>
                         </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
