@@ -27,4 +27,19 @@ class Course {
         return $result->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    //insert me
+    
+    public function insert($title , $description , $price)
+{
+    $result = $this->db->prepare( "INSERT INTO courses (title, description, price) VALUES (:title, :description, :price)");
+
+    $result->bindParam(":title", $title, PDO::PARAM_STR);
+    $result->bindParam(":description", $description, PDO::PARAM_STR);
+    $result->bindParam(":price", $price);
+
+    $result->execute();
+
+    return $this->db->lastInsertId();
+}
 }

@@ -21,7 +21,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </span>
             </div>
             <div class="card-body p-4">
-                <form action="courses/create.php" method="POST">
+                <form action="courses/store.php" method="POST">
                     <!-- Title Field -->
                     <div class="mb-3">
                         <label for="title" class="form-label fw-medium">Course Title <span class="text-danger">*</span></label>
@@ -64,7 +64,7 @@ require_once __DIR__ . '/../includes/header.php';
 
                     <div class="d-flex justify-content-end gap-2 pt-2 border-top">
                         <a href="courses/index.php" class="btn btn-light px-4 border">Cancel</a>
-                        <button type="submit" class="btn btn-success px-4">
+                        <button type="submit" name="submit"  class="btn btn-success px-4">
                             <i class="bi bi-save me-1"></i> Save Course
                         </button>
                     </div>
