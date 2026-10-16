@@ -42,4 +42,15 @@ class Course {
 
     return $this->db->lastInsertId();
 }
+
+  // count total courses for dashboard cards
+public function countCourses(){
+
+    $result = $this->db->query(
+        "select count(*) as total from courses"
+    );
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
 }

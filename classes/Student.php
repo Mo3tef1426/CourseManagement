@@ -46,5 +46,19 @@ class Student {
         $result->execute();
         return $this->db->lastInsertId();
 
+
+
     }
+
+        // count total students for dashboard cards
+        
+    public function countStudents(){
+
+    $result = $this->db->query(
+        "select count(*) as total from students"
+    );
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
 }

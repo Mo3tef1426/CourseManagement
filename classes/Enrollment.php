@@ -32,4 +32,17 @@ class Enrollment {
     return $result->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    // count total enrollments for dashboard cards
+
+
+    public function countEnrollments(){
+
+    $result = $this->db->query(
+        "select count(*) as total from enrollments"
+    );
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
 }

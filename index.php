@@ -1,5 +1,26 @@
 <?php
 require_once __DIR__ . '/includes/header.php';
+
+// fetch totals from database
+
+require_once 'classes/Student.php';
+require_once 'classes/Course.php';
+require_once 'classes/Enrollment.php';
+
+use Classes\Student;
+use Classes\Course;
+use Classes\Enrollment;
+
+$studentObj = new Student();
+$courseObj = new Course();
+$enrollmentObj = new Enrollment();
+
+$studentsCount = $studentObj->countStudents();
+$coursesCount = $courseObj->countCourses();
+$enrollmentsCount = $enrollmentObj->countEnrollments();
+
+
+
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -24,8 +45,12 @@ require_once __DIR__ . '/includes/header.php';
         <div class="card stat-card p-3">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
+                    <!-- fetch totals from database -->
                     <span class="text-secondary small text-uppercase fw-semibold">Total Students</span>
-                    <h3 class="fw-bold mt-2 mb-0 text-dark">50</h3>
+                    <!-- me -->
+                  <h3 class="fw-bold mt-2 mb-0 text-dark">
+    <?= $studentsCount['total']; ?>
+</h3>
                     <a href="students/index.php" class="text-primary small text-decoration-none mt-2 d-inline-block">
                         View students <i class="bi bi-arrow-right"></i>
                     </a>
@@ -43,8 +68,10 @@ require_once __DIR__ . '/includes/header.php';
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <span class="text-secondary small text-uppercase fw-semibold">Total Courses</span>
-                    <h3 class="fw-bold mt-2 mb-0 text-dark">4</h3>
-                    <a href="courses/index.php" class="text-success small text-decoration-none mt-2 d-inline-block">
+                    <!-- fetch totals from database -->
+                    <h3 class="fw-bold mt-2 mb-0 text-dark">
+                        <?= $coursesCount['total']; ?>
+                    </h3>  <a href="courses/index.php" class="text-success small text-decoration-none mt-2 d-inline-block">
                         View courses <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
@@ -60,9 +87,11 @@ require_once __DIR__ . '/includes/header.php';
         <div class="card stat-card p-3">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span class="text-secondary small text-uppercase fw-semibold">Total Enrollments</span>
-                    <h3 class="fw-bold mt-2 mb-0 text-dark">90</h3>
-                    <a href="enrollments/index.php" class="text-purple small text-decoration-none mt-2 d-inline-block" style="color: #9333ea;">
+                   <span class="text-secondary small text-uppercase fw-semibold">Total Enrollments</span>
+                   <!-- fetch totals from database -->
+                    <h3 class="fw-bold mt-2 mb-0 text-dark">
+                        <?= $enrollmentsCount['total']; ?>
+                    </h3> <a href="enrollments/index.php" class="text-purple small text-decoration-none mt-2 d-inline-block" style="color: #9333ea;">
                         View enrollments <i class="bi bi-arrow-right"></i>
                     </a>
                 </div>
