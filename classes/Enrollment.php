@@ -67,4 +67,15 @@ public function getRecentEnrollments(){
     return $result->fetchAll(PDO::FETCH_ASSOC);
 
 }
+// add enrollment
+
+public function insert($studentId , $courseId){  $result = $this->db->prepare("insert into enrollments(student_id , course_id)
+        values (:student_id , :course_id)");
+          $result->bindParam(":student_id",$studentId,PDO::PARAM_INT);
+  $result->bindParam( ":course_id",$courseId,PDO::PARAM_INT
+    );
+
+    return $result->execute();
+
+}
 }

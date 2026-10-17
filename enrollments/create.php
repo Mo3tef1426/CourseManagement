@@ -1,5 +1,45 @@
 <?php
+
+
+require_once "../classes/Student.php";
+require_once "../classes/Course.php";
+
+use Classes\Student;
+use Classes\Course;
+
+// get students
+$studentObj = new Student();
+$students = $studentObj->getAll();
+
+// get courses
+$courseObj = new Course();
+$courses = $courseObj->getAll();
+
+//add Enrollment
+require_once "../classes/Enrollment.php";
+use Classes\Enrollment;
+$enrollmentObj = new Enrollment();
+
+// save enrollment
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    $studentId = $_POST['student_id'];
+
+    $courseId = $_POST['course_id'];
+
+    $enrollmentObj->insert(
+        $studentId,
+        $courseId
+    );
+
+    header("Location: index.php");
+
+    exit;
+}
+
 require_once __DIR__ . '/../includes/header.php';
+
 ?>
 
 <div class="row justify-content-center">
@@ -22,17 +62,21 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <div class="card-body p-4">
                 <form action="enrollments/create.php" method="POST" novalidate>
-                    <!-- Student Selection -->
                     <div class="mb-4">
                         <label for="student_id" class="form-label fw-medium">Student <span class="text-danger">*</span></label>
                         <select name="student_id"
                             id="student_id"
                             class="form-select"
                             required>
+
                             <option value="">-- Choose a Student --</option>
-                            <option value="1">Ahmed Mahmoud</option>
+                            <?php foreach($students as $student){ ?> 
+                            <option value="<?php echo $student['id']; ?>">
+                             <?php echo $student['name']; ?> </option> <?php } 
+                             ?>
+                            <!-- <option value="1">Ahmed Mahmoud</option>
                             <option value="2">Mohamed Ali</option>
-                            <option value="3">Omar Hassan</option>
+                            <option value="3">Omar Hassan</option> -->
                         </select>
                         <div class="form-text">Don't see the student? <a href="students/create.php">Add a new student</a>.</div>
                     </div>
@@ -45,7 +89,10 @@ require_once __DIR__ . '/../includes/header.php';
                             class="form-select"
                             required>
                             <option value="">-- Choose a Course --</option>
-                            <option value="1">Introduction to PHP</option>
+                            <?php foreach($courses as $course){ ?> 
+                            <option value="<?php echo $course['id']; ?>"><?php echo $course['title']; ?></option>
+                            <?php } ?>
+                            <!-- <option value="1">Introduction to PHP</option>
                             <option value="2">Advanced JavaScript</option>
                             <option value="3">MySQL for Beginners</option>
                             <option value="4">React.js Fundamentals</option>
@@ -54,7 +101,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <option value="7">CSS & UI Design</option>
                             <option value="8">Git & Version Control</option>
                             <option value="9">RESTful APIs</option>
-                            <option value="10">Database Management Systems</option>
+                            <option value="10">Database Management Systems</option> -->
                         </select>
                         <div class="form-text">Don't see the course? <a href="courses/create.php">Create a new course</a>.</div>
                     </div>
