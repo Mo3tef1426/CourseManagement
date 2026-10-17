@@ -53,4 +53,54 @@ public function countCourses(){
     return $result->fetch(PDO::FETCH_ASSOC);
 
 }
+//sow one course 
+public function getById($id){
+
+    $result = $this->db->prepare(
+        "select * from courses where id = :id"
+    );
+
+    $result->bindParam(
+        ":id",
+        $id,
+        PDO::PARAM_INT
+    );
+
+    $result->execute();
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
+// count students enrolled in course
+public function countStudents($courseId){
+
+    $result = $this->db->prepare(
+        "select count(*) as total
+         from enrollments
+         where course_id = :course_id"
+    );
+
+    $result->bindParam(":course_id", $courseId, PDO::PARAM_INT);
+
+    $result->execute();
+
+    return $result->fetch(PDO::FETCH_ASSOC);
+
+}
+
+
+// get students in course
+
+public function getStudentsInCourse($courseId){
+
+    $result = $this->db->prepare( "SELECT s.id, s.name, s.email, s.phone, e.enrolled_at FROM enrollments e JOIN students s
+         ON e.student_id = s.id WHERE e.course_id = :course_id" );
+
+    $result->bindParam( ":course_id", $courseId,  PDO::PARAM_INT );
+
+    $result->execute();
+
+    return $result->fetchAll(PDO::FETCH_ASSOC);
+
+}
 }

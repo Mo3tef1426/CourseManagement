@@ -1,10 +1,25 @@
 <?php
 require_once __DIR__ . '/../includes/header.php';
+
+
+require_once "../classes/Course.php";
+
+use Classes\Course;
+
+$courseObj = new Course();
+
+$id = $_GET['id'];
+
+$course = $courseObj->getById($id);
+$totalStudents = $courseObj->countStudents($id);
+// get enrolled students
+$students = $courseObj->getStudentsInCourse($id);
+
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-        <h2 class="h4 fw-bold text-dark mb-1">5</h2>
+        <h2 class="h4 fw-bold text-dark mb-1"> <?php echo $course['title']; ?> </h2>
         <p class="text-secondary small mb-0">Course Overview & Enrolled Student Roster</p>
     </div>
     <div class="d-flex gap-2">
@@ -28,25 +43,26 @@ require_once __DIR__ . '/../includes/header.php';
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge bg-secondary-subtle text-secondary">Course #50</span>
+                    <span class="badge bg-secondary-subtle text-secondary"> Course #<?php echo $course['id']; ?> </span>
                     <span class="badge bg-success fs-6 fw-bold px-3 py-2">
-                        $5000
+                       $<?php echo $course['price']; ?>
                     </span>
                 </div>
 
-                <h5 class="fw-bold text-dark mb-2">60</h5>
+                <h5 class="fw-bold text-dark mb-2"> <?php echo $course['title']; ?> </h5>
                 <p class="text-secondary small mb-3">
-                    <em class="text-muted">No description provided.</em>
+                    <em class="text-muted"><?php echo !empty ($course['description']) ? $course['description']:
+                     'No description provided.';?></em>
                 </p>
 
                 <ul class="list-group list-group-flush small">
                     <li class="list-group-item d-flex justify-content-between px-0 py-2">
                         <span class="text-muted"><i class="bi bi-people me-2"></i>Total Enrolled</span>
-                        <span class="badge bg-primary rounded-pill">14</span>
+                        <span class="badge bg-primary rounded-pill"> <?php echo $totalStudents['total']; ?>  </span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between px-0 py-2">
                         <span class="text-muted"><i class="bi bi-calendar3 me-2"></i>Created On</span>
-                        <span class="fw-medium text-dark">Oct 4, 2026</span>
+                        <span class="fw-medium text-dark"> <?php echo $course['created_at']; ?> </span>
                     </li>
                 </ul>
             </div>
@@ -85,7 +101,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="card">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <span class="fw-semibold text-dark">
-                    <i class="bi bi-people-fill me-2 text-primary"></i> Enrolled Students Roster (10)
+                    <i class="bi bi-people-fill me-2 text-primary"></i> Enrolled Students Roster (<?php echo $totalStudents['total']; ?>)
                 </span>
             </div>
             <div class="table-responsive">
@@ -99,6 +115,8 @@ require_once __DIR__ . '/../includes/header.php';
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- show students list -->
+                        <?php foreach($students as $student){ ?>
                         <!-- <tr>
                                 <td colspan="4" class="text-center py-4 text-muted">
                                     No students are enrolled in this course yet.
@@ -109,16 +127,16 @@ require_once __DIR__ . '/../includes/header.php';
                             <td>
                                 <div class="fw-semibold text-dark">
                                     <a href="students/show.php?id=1" class="text-dark text-decoration-none">
-                                        Ahmed Mahmoud
+                                        <?php echo $student['name']; ?>
                                     </a>
                                 </div>
-                                <small class="text-muted">ahmed@gmail.com</small>
+                                <small class="text-muted"><?php echo $student['email']; ?></small>
                             </td>
                             <td>
-                                250552833344
+                                <?php echo $student['phone']; ?>
                             </td>
                             <td class="text-secondary small">
-                                Oct 4, 2026
+                                <?php echo $student['enrolled_at']; ?>
                             </td>
                             <td class="text-end">
                                 <a href="enrollments/delete.php?id=6&redirect=course&course_id=5"
@@ -129,6 +147,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 </a>
                             </td>
                         </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
